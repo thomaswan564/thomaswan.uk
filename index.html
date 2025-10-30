@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thomas Wan - 個人首頁</title>
+  <link rel="icon" href="https://thomaswan.uk/imgs/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f5f7;
+      color: #1d1d1f;
+      scroll-behavior: smooth;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    a {
+      color: #000000;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    header {
+      background: #fff;
+      padding: 1rem 5vw;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .nav img {
+      height: 24px;
+      cursor: pointer;
+    }
+    .nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav ul li {
+      font-size: 0.95rem;
+    }
+    .dark-mode-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: inherit;
+    }
+    .container {
+      padding: 10vh 10vw;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .hero {
+      text-align: center;
+      padding: 8vh 0;
+    }
+    .hero img {
+      max-width: 100%;
+      margin: 2rem auto;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      max-width: 600px;
+      margin: auto;
+    }
+    .cta-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      background: #0071e3;
+      color: white;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    .cta-button:hover {
+      background: #005bb5;
+    }
+    .section {
+      padding: 8vh 0;
+    }
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .section p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .project-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    }
+    .skills {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      max-width: 600px;
+      margin: 2rem auto 0;
+    }
+    .skill {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      transition: box-shadow 0.3s ease;
+    }
+    .skill:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    .skill-name {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .skill-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: #eee;
+    }
+    .skill-bar-fill {
+      height: 8px;
+      border-radius: 4px;
+      background: #0071e3;
+      width: 0%;
+      transition: width 1s ease-out;
+    }
+    .qr-popup {
+      display: none;
+      position: absolute;
+      background: white;
+      padding: 6px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    .hover-target {
+      position: relative;
+      display: inline-block;
+    }
+    .hover-target:hover .qr-popup {
+      display: block;
+      top: -220px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #0071e3;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 2rem 0;
+      color: #888;
+      transition: color 0.5s;
+    }
+
+    /* 确保卡片链接保持原有样式 */
+    a.project-card {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* 确保技能条链接保持原有样式 */
+    a.skill {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* 暗黑模式样式 */
+    body.dark {
+      background-color: #1d1d1f;
+      color: #eee;
+    }
+    body.dark header {
+      background: #2c2c2e;
+    }
+    body.dark a {
+      color: #eee;
+    }
+    body.dark .project-card,
+    body.dark .skill {
+      background: #2c2c2e;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    body.dark .project-card:hover {
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+    body.dark .skill:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+    body.dark .skill-bar {
+      background: #444;
+    }
+    body.dark .skill-bar-fill {
+      background: #0a84ff;
+    }
+    body.dark .qr-popup {
+      background: #2c2c2e;
+    }
+    body.dark footer {
+      color: #aaa;
+    }
+    body.dark .cta-button {
+      background: #0a84ff;
+    }
+    body.dark .cta-button:hover {
+      background: #0066cc;
+    }
+    body.dark .back-to-top {
+      background: #0a84ff;
+    }
+    body.dark a.project-card,
+    body.dark a.skill {
+      color: inherit;
+    }
+
+    @media (max-width: 768px) {
+      .nav ul {
+        gap: 1rem;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a href="https://thomaswan.uk#top"><img src="https://thomaswan.uk/imgs/favicon.ico" alt="Logo" /></a>
+      <ul>
+        <li><a href="https://thomaswan.uk#about">關於我</a></li>
+        <li><a href="https://thomaswan.uk#projects">作品展示</a></li>
+        <li><a href="https://thomaswan.uk/original">原創項目</a></li>
+        <li><a href="https://thomaswan.uk/share">轉載項目</a></li>
+        <li><a href="https://thomaswan.uk/contact">聯絡方式</a></li>
+        <li><button class="dark-mode-toggle" onclick="toggleDarkMode()">🌓</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <div id="top" class="container">
+    <section class="hero" data-aos="fade-up">
+      <h1>Hi，我是 Thomas</h1>
+      <p>探索創新科技，實現數位未來。我專注於電子開發、創客項目與智能系統整合。</p>
+      <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/MCV_SpringDrop_DotNet_Homepage_2560x932-1.jpg" alt="Hero Banner" />
+      <a href="https://thomaswan.uk/contact" class="cta-button">聯絡我</a>
+    </section>
+
+    <section class="section" id="about" data-aos="fade-up">
+      <h2>關於我</h2>
+      <p>我是一位對科技充滿熱情的創客，擅長使用 ESP32、RFID、NFC、3D 打印與 Web 技術結合，打造智慧硬體與軟體整合方案。</p>
+    </section>
+    <section class="section" data-aos="fade-up">
+      <h2>自我介紹影片</h2>
+      <div style="position: relative; padding-top: 56.25%; height: 0; overflow: hidden;">
+        <iframe src="https://player.bilibili.com/player.html?bvid=BV1GJ411x7h7&danmaku=0"
+                scrolling="no"
+                border="0"
+                frameborder="no"
+                framespacing="0"
+                allowfullscreen="true"
+                style="position: absolute; top:0; left:0; width:100%; height:100%;">
+        </iframe>
+      </div>
+    </section>
+
+    <section class="section" id="projects" data-aos="fade-up">
+      <h2>作品展示</h2>
+      <a href="https://thomaswan.uk/original">原創項目</a>
+      <a href="https://thomaswan.uk/share">轉載項目</a>
+      <div class="projects">
+        <a href="https://thomaswan.uk/original#dormitory" class="project-card">
+          <h3>智慧宿舍管理系統</h3>
+          <p>使用 ESP32 和 NFC 技術，實現宿舍門禁與學生出入統計。</p>
+        </a>
+        <a href="https://thomaswan.uk/original#lighting" class="project-card">
+          <h3>WiFi 控制機頂燈系統</h3>
+          <p>與 OBS 聯動，自動顯示拍攝狀態，無線同步多台攝像頭。</p>
+        </a>
+        <a href="https://thomaswan.uk/original#canteen" class="project-card">
+          <h3>智能飯堂碗櫃</h3>
+          <p>整合 NFC 模塊與 Web 界面，實現飯碗與飯卡綁定管理。</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" data-aos="fade-up">
+      <h2>項目研發進度</h2>
+      <div class="skills">
+        <div class="skill">
+          <div class="skill-name">Web 開發</div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-percentage="53"></div></div>
+        </div>
+        <div class="skill">
+          <div class="skill-name">Minecraft伺服器</div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-percentage="0"></div></div>
+        </div>
+        <div class="skill">
+          <div class="skill-name">智能飯堂碗櫃（已完成，請到原創項目查看）</div>
+          <div class="skill-bar"><div class="skill-bar-fill" data-percentage="100"></div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    &copy; <span id="currentYear"></span> Thomas Wan. 保留所有權利。
+    <a href="https://icp.gov.moe/?keyword=20250633" target="_blank">萌ICP备20250633号</a>
+  </footer>
+
+  <button class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">↑</button>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+    
+    // 自动更新年份
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    // 暗黑模式切换功能
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      
+      // 保存用户偏好到localStorage
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('darkMode', isDark);
+    }
+
+    // 页面加载时检查用户偏好
+    document.addEventListener('DOMContentLoaded', () => {
+      const darkMode = localStorage.getItem('darkMode') === 'true';
+      if (darkMode) {
+        document.body.classList.add('dark');
+      }
+      
+      // 初始化技能条动画
+      initSkillBars();
+    });
+
+    // 技能条动画函数
+    function initSkillBars() {
+      const skillBars = document.querySelectorAll('.skill-bar-fill');
+      
+      // 创建IntersectionObserver来检测技能条是否进入视口
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const skillBar = entry.target;
+            const targetWidth = skillBar.getAttribute('data-width');
+            animateSkillBar(skillBar, targetWidth);
+            observer.unobserve(skillBar); // 动画完成后停止观察
+          }
+        });
+      }, { threshold: 0.5 }); // 当50%的元素可见时触发
+
+      // 开始观察所有技能条
+      skillBars.forEach(bar => {
+        bar.style.width = '0%'; // 初始设置为0
+        observer.observe(bar);
+      });
+    }
+
+    // 动画函数
+    function animateSkillBar(element, targetWidth) {
+      let currentWidth = 0;
+      const duration = 1500; // 动画持续时间(毫秒)
+      const increment = targetWidth / (duration / 16); // 每帧增加的宽度
+      
+      const animate = () => {
+        currentWidth += increment;
+        if (currentWidth >= targetWidth) {
+          element.style.width = targetWidth + '%';
+          return;
+        }
+        element.style.width = currentWidth + '%';
+        requestAnimationFrame(animate);
+      };
+      
+      animate();
+    }
+  </script>
+  <script>
+    const skillsSection = document.querySelector('.skills');
+    const skillBars = document.querySelectorAll('.skill-bar-fill');
+    let skillsPlayed = false;
+  
+    const skillsObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !skillsPlayed) {
+        skillsPlayed = true;
+        skillBars.forEach(bar => {
+          const target = +bar.getAttribute('data-percentage');
+          let current = 0;
+          const speed = 10; // 數字越小動得越快
+          const interval = setInterval(() => {
+            if (current >= target) {
+              clearInterval(interval);
+            } else {
+              current++;
+              bar.style.width = `${current}%`;
+            }
+          }, speed);
+        });
+      }
+    }, { threshold: 0.5 });
+  
+    skillsObserver.observe(skillsSection);
+  </script>
+  
+</body>
+</html>
