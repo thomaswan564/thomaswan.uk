@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>轉載項目 - Thomas Wan</title>
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      padding-bottom: 80px;
+      transition: background 0.4s, color 0.4s;
+    }
+    header {
+      background: #fff;
+      padding: 1rem 5vw;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s;
+    }
+    a {
+      color: #0071e3;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #1d1d1f;
+      transition: color 0.3s ease;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin: 2rem 0;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 5vw;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      transform-origin: center center;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card img {
+      width: 100%;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .card.hovered {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .card.expanded {
+      transform: scale(1.5); /* 放大比例增加到1.5 */
+      z-index: 2;
+    }
+    @media (max-width: 1200px) {
+      .gallery { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .gallery { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+    footer {
+      text-align: center;
+      color: #888;
+      padding: 2rem;
+      transition: color 0.5s;
+    }
+    .dark-mode-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: inherit;
+    }
+    /* 暗黑模式样式 */
+    body.dark {
+      background-color: #1d1d1f;
+      color: #eee;
+    }
+    body.dark header {
+      background: #2c2c2e;
+    }
+    body.dark .nav a {
+      color: #eee;
+    }
+    body.dark .card {
+      background: #2c2c2e;
+    }
+    body.dark footer {
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a href="../"><img src="../imgs/favicon.ico" height="24" alt="logo"></a>
+      <ul>
+        <li><a href="..#about">關於我</a></li>
+        <li><a href="..#projects">作品展示</a></li>
+        <li><a href="../original">原創項目</a></li>
+        <li><a href="../share">轉載項目</a></li>
+        <li><a href="../contact">聯絡方式</a></li>
+        <li><button class="dark-mode-toggle" onclick="toggleDarkMode()">🌓</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <h1 data-aos="fade-up">轉載項目</h1>
+  
+  <div class="gallery" data-aos="fade-up">
+    <!-- 放置多張卡片 -->
+    <a href="https://src.thomaswan.uk" class="card" target="_blank"><img src="./gallery-ico/src.png" alt="性压抑指数计算器(Sexual Repression Calculator)"></a>
+    <a href="share.html#project2" class="card"><img src="https://placehold.co/600x400" alt="項目2"></a>
+    <a href="share.html#project3" class="card"><img src="https://placehold.co/600x400" alt="項目3"></a>
+    <a href="share.html#project4" class="card"><img src="https://placehold.co/600x400" alt="項目4"></a>
+    <a href="share.html#project5" class="card"><img src="https://placehold.co/600x400" alt="項目5"></a>
+    <a href="share.html#project6" class="card"><img src="https://placehold.co/600x400" alt="項目6"></a>
+    <a href="share.html#project7" class="card"><img src="https://placehold.co/600x400" alt="項目7"></a>
+    <a href="share.html#project8" class="card"><img src="https://placehold.co/600x400" alt="項目8"></a>
+    <a href="share.html#project9" class="card"><img src="https://placehold.co/600x400" alt="項目9"></a>
+    <a href="share.html#project10" class="card"><img src="https://placehold.co/600x400" alt="項目10"></a>
+  </div>
+
+  <footer>
+    &copy; <span id="currentYear"></span> Thomas Wan. 保留所有權利。
+    <a href="https://icp.gov.moe/?keyword=20250633" target="_blank">萌ICP备20250633号</a>
+  </footer>
+  
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    // 自动更新年份
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      let timeout;
+      card.addEventListener('mouseenter', () => {
+        card.classList.add('hovered');
+        timeout = setTimeout(() => {
+          card.classList.add('expanded');
+        }, 270); // 缩短为0.27秒(270ms)
+      });
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('hovered');
+        card.classList.remove('expanded');
+        clearTimeout(timeout);
+      });
+    });
+
+    // 暗黑模式切换功能
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      
+      // 保存用户偏好到localStorage
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('darkMode', isDark);
+    }
+
+    // 页面加载时检查用户偏好
+    document.addEventListener('DOMContentLoaded', () => {
+      const darkMode = localStorage.getItem('darkMode') === 'true';
+      if (darkMode) {
+        document.body.classList.add('dark');
+      }
+    });
+  </script>
+  
+</body>
+</html>
