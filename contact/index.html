@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>聯絡方式 - Thomas Wan</title>
+  <link rel="icon" href="https://thomaswan.uk/imgs/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      transition: background-color 0.5s, color 0.5s;
+      padding-bottom: 60px;
+    }
+    header {
+      background: #fff;
+      padding: 1rem 5vw;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s;
+    }
+    a {
+      color: #0071e3;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .nav img {
+      height: 24px;
+      cursor: pointer;
+    }
+    .nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav ul li {
+      font-size: 0.95rem;
+    }
+    .nav a {
+      color: #1d1d1f;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 800px;
+      margin: 5vh auto;
+      padding: 0 5vw;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .hover-target {
+      position: relative;
+      display: inline-block;
+    }
+    .qr-popup {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      background: white;
+      padding: 6px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 10;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.5s;
+    }
+    .hover-target:hover .qr-popup {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-20px);
+    }
+    form {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+      transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+    }
+    button[type="submit"] {
+      background: #0071e3;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background 0.3s ease;
+    }
+    button[type="submit"]:hover {
+      background: #005bb5;
+    }
+    button[type="submit"]:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
+    .dark-mode-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: inherit;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 2rem 0;
+      color: #888;
+      transition: color 0.5s;
+    }
+    .cf-turnstile {
+      margin: 1rem 0;
+    }
+    .error-message {
+      color: #ff3b30;
+      font-size: 0.9rem;
+      margin-top: -0.5rem;
+    }
+
+    /* 暗黑模式样式 */
+    body.dark {
+      background-color: #1d1d1f;
+      color: #eee;
+    }
+    body.dark header {
+      background: #2c2c2e;
+    }
+    body.dark .nav a {
+      color: #eee;
+    }
+    body.dark input, 
+    body.dark textarea {
+      background: #2c2c2e;
+      color: #eee;
+      border: 1px solid #444;
+    }
+    body.dark .qr-popup {
+      background: #2c2c2e;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    body.dark button[type="submit"] {
+      background: #0a84ff;
+    }
+    body.dark button[type="submit"]:hover {
+      background: #0066cc;
+    }
+    body.dark footer {
+      color: #aaa;
+    }
+    body.dark .error-message {
+      color: #ff453a;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a href="index.html"><img src="https://thomaswan.uk/imgs/favicon.ico" alt="Logo" /></a>
+      <ul>
+        <li><a href="https://thomaswan.uk#about">關於我</a></li>
+        <li><a href="https://thomaswan.uk#projects">作品展示</a></li>
+        <li><a href="https://thomaswan.uk/original">原創項目</a></li>
+        <li><a href="https://thomaswan.uk/share">轉載項目</a></li>
+        <li><a href="https://thomaswan.uk/contact">聯絡方式</a></li>
+        <li><button class="dark-mode-toggle" onclick="toggleDarkMode()">🌓</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="container" data-aos="fade-up">
+    <h1>聯絡方式</h1>
+
+    <form id="contactForm">
+      <label>姓名：</label>
+      <input type="text" name="name" required />
+
+      <label>Email：</label>
+      <input type="email" name="email" required />
+
+      <label>訊息內容：</label>
+      <textarea name="message" rows="5" required></textarea>
+
+      <!-- Cloudflare Turnstile 人机验证 -->
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAABTtMiYFvskj71Mt" data-callback="onCaptchaSuccess"></div>
+      <div id="captchaError" class="error-message" style="display: none;">请完成人机验证</div>
+      <div id="rateLimitError" class="error-message" style="display: none;">发送过于频繁，请稍后再试</div>
+
+      <button type="submit" id="submitBtn" disabled>送出</button>
+    </form>
+    <br><br><br>
+    <p>Email: <a href="mailto:report@thomaswan.uk">report@thomaswan.uk</a></p>
+    <p>
+        Github: <a href="https://github.com/thomaswan564" target="_blank">@thomaswan564</a>
+    </p>
+    <p class="hover-target">
+      Telegram: <a href="https://t.me/thomaswan564" target="_blank">@thomaswan564</a>
+      <span class="qr-popup"><img src="https://thomaswan.uk/imgs/contact/telegram.jpg" width="160" alt="Telegram QR" /></span>
+    </p>
+    <br>
+    <p class="hover-target">
+      WeChat：移到此處以顯示QR-Code
+      <span class="qr-popup"><img src="https://thomaswan.uk/imgs/contact/wechat.jpg" width="160" alt="WeChat QR" /></span>
+    </p>
+  </div>
+
+  <footer>
+    &copy; <span id="currentYear"></span> Thomas Wan. 保留所有權利。
+    <a href="https://icp.gov.moe/?keyword=20250633" target="_blank">萌ICP备20250633号</a>
+  </footer>
+  
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    // 自动更新年份
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    // 暗黑模式切换功能
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      
+      // 保存用户偏好到localStorage
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('darkMode', isDark);
+    }
+
+    // 页面加载时检查用户偏好
+    document.addEventListener('DOMContentLoaded', () => {
+      const darkMode = localStorage.getItem('darkMode') === 'true';
+      if (darkMode) {
+        document.body.classList.add('dark');
+      }
+
+      // 添加 Cloudflare Turnstile 脚本
+      const turnstileScript = document.createElement('script');
+      turnstileScript.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      document.head.appendChild(turnstileScript);
+    });
+
+    // 人机验证通过回调
+    function onCaptchaSuccess(token) {
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('captchaError').style.display = 'none';
+    }
+
+    // 表单提交处理
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const captchaError = document.getElementById('captchaError');
+      const rateLimitError = document.getElementById('rateLimitError');
+      
+      // 检查是否有人机验证token
+      if (submitBtn.disabled) {
+        captchaError.style.display = 'block';
+        return;
+      }
+      
+      // 检查发送频率限制
+      const lastSubmitTime = parseInt(localStorage.getItem('lastSubmitTime') || '0');
+      const currentTime = Date.now();
+      const minInterval = 5000 + Math.random() * 5000; // 5-10秒随机间隔
+      
+      if (currentTime - lastSubmitTime < minInterval) {
+        rateLimitError.style.display = 'block';
+        return;
+      }
+      
+      // 重置错误信息
+      captchaError.style.display = 'none';
+      rateLimitError.style.display = 'none';
+      
+      // 禁用按钮并记录发送时间
+      submitBtn.disabled = true;
+      localStorage.setItem('lastSubmitTime', currentTime.toString());
+      
+      // 这里可以添加实际的表单提交逻辑
+      // 例如使用fetch API发送数据到服务器
+      console.log('表单已提交');
+      alert('訊息已送出，感謝您的聯絡！');
+      
+      // 重置表单
+      this.reset();
+      
+      // 重置人机验证
+      if (window.turnstile) {
+        window.turnstile.reset();
+      }
+      
+      // 5秒后重新启用按钮
+      setTimeout(() => {
+        submitBtn.disabled = false;
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
