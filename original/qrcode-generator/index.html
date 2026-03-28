@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code 生成器</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --text: #1d1d1f;
+      --sub: #6e6e73;
+      --accent: #0071e3;
+      --border: #e5e5ea;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      width: 320px;
+      text-align: center;
+    }
+
+    h2 {
+      margin: 0 0 15px;
+      font-weight: 600;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(0,113,227,0.2);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #qrcode {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--sub);
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>QR Code</h2>
+
+  <select id="type" onchange="switchType()">
+    <option value="url">URL</option>
+    <option value="wifi">WiFi</option>
+    <option value="text">文本</option>
+  </select>
+
+  <div id="inputs"></div>
+
+  <button onclick="generateQR()">生成二维码</button>
+
+  <div id="qrcode"></div>
+</div>
+
+<script>
+let currentType = 'url';
+
+function switchType() {
+  currentType = document.getElementById('type').value;
+  const container = document.getElementById('inputs');
+
+  if (currentType === 'url') {
+    container.innerHTML = '<input id="url" placeholder="https://example.com">';
+  } else if (currentType === 'wifi') {
+    container.innerHTML = `
+      <input id="ssid" placeholder="WiFi 名称">
+      <input id="password" placeholder="密码">
+      <select id="encryption">
+        <option value="WPA">WPA/WPA2</option>
+        <option value="WEP">WEP</option>
+        <option value="nopass">无密码</option>
+      </select>
+      <div class="hint">扫码即可连接 WiFi</div>
+    `;
+  } else {
+    container.innerHTML = '<input id="text" placeholder="输入任意文本">';
+  }
+}
+
+function generateQR() {
+  let data = '';
+
+  if (currentType === 'url') {
+    data = document.getElementById('url').value;
+  } else if (currentType === 'wifi') {
+    const ssid = document.getElementById('ssid').value;
+    const password = document.getElementById('password').value;
+    const encryption = document.getElementById('encryption').value;
+    data = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
+  } else {
+    data = document.getElementById('text').value;
+  }
+
+  document.getElementById('qrcode').innerHTML = '';
+  new QRCode(document.getElementById('qrcode'), {
+    text: data,
+    width: 200,
+    height: 200
+  });
+}
+
+switchType();
+</script>
+
+</body>
+</html>
